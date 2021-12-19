@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Memory Game</title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.min.css" integrity="sha512-V5fKCVKOFy36w8zJmLzPH5R6zU6KvuHOvxfMRczx2ZeqTjKRGSBO9yiZjCKEJS3n6EmENwrH/xvSwXqxje+VVA==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/black.min.css" integrity="sha512-5w6AICFraU3+mkD1dTmad4vXyyJ1nZM/KA2TG8oQ5yiyTYAXssxPk930O1upFxeC7ml4CxyXC1QBzthu26ZxZg==" crossorigin="anonymous" />
+  <style>img{height: 30rem;}</style>
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides"></div>
+  </div>
+
+  <!-- js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.min.js" integrity="sha512-QYXU3Cojl94ZRiZRjUZpyg1odj9mKTON9MsTMzGNx/L3JqvMA3BQNraZwsZ83UeisO+QMVfFa83SyuYYJzR9hw==" crossorigin="anonymous"></script>
+  <script>
+    (() => {
+      /** Fisher-Yates Shuffle */
+      let shuffle = (arr) => {
+        let currentIndex = arr.length, tempValue, randomIndex;
+
+        while (0 !== currentIndex) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+          tempValue = arr[currentIndex];
+          arr[currentIndex] = arr[randomIndex];
+          arr[randomIndex] = tempValue;
+        }
+
+        return arr;
+      };
+
+      let slides = (arr) => {
+        return shuffle(arr).map((name) => {
+          let img = name.toLowerCase()
+            .replaceAll(' ', '_')
+            .replaceAll('-', '_')
+            .replaceAll('.', '_')
+            .replaceAll('\'', '_');
+
+          return `
+            <section>
+              <img
+                data-src="https://www.randomlists.com/img/people/${img}.jpg"
+                loading="lazy"
+              >
+            </section>
+
+            <section>
+              <h2 class="r-fit-text">${name}</h2>
+            </section>
+          `;
+        });
+      };
+
+      $.getJSON('data/people.json', (arr) => {
+        $('.slides').append(slides(arr).join(''));
+        Reveal.initialize({viewDistance: 5});
+      });
+    })();
+  </script>
+</body>
+</html>

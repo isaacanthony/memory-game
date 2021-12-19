@@ -1,0 +1,11 @@
+include:
+  - data/people.json
+  - index.html
+
+exclude:
+  - notebooks/scrape.ipynb
+  - _config.yml
+  - .gitignore
+  - LICENSE
+  - Makefile
+  - README.md
