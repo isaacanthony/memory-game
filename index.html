@@ -36,21 +36,15 @@
       };
 
       let slides = (arr) => {
-        return shuffle(arr).map((name) => {
-          let img = name.toLowerCase()
-            .replaceAll(' ', '_')
-            .replaceAll('-', '_')
-            .replaceAll('.', '_')
-            .replaceAll('\'', '_');
-
+        return shuffle(arr).map((row) => {
           return `
             <section
-              data-background="https://www.randomlists.com/img/people/${img}.jpg"
+              data-background="${row.split('|')[1]}"
               data-background-size="contain"
             ></section>
 
             <section>
-              <h2 class="r-fit-text">${name}</h2>
+              <h2 class="r-fit-text">${row.split('|')[0]}</h2>
             </section>
           `;
         });
